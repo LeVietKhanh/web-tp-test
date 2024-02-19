@@ -1,0 +1,211 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --boder-radius: 10px;
+    --button-radius: 30px;
+    --point-size: 20px;
+}
+
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    right: 0px;
+    transform: translate(0, -50%);
+    height: 180px;
+    margin: 0 20px;
+    border-radius: var(--boder-radius);
+    border: 1px solid #ccc;
+}
+
+@keyframes focus {
+    from {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    to {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+}
+
+.wrapper:hover .route-name {
+    padding-left: 45px;
+    padding-right: 45px;
+    box-shadow: 5px 5px 25px #ccc;
+    animation-name: focus;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    text-align: center;
+    background-color: #ccc;
+    border-bottom-left-radius: var(--boder-radius);
+    border-bottom-right-radius: var(--boder-radius);
+}
+
+.button {
+    border-radius: var(--button-radius);
+    background-color: #6c6666;
+    color: #fff;
+    font-weight: 600;
+    height: 100%;
+    margin: 5px 0;
+}
+
+.route-name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-radius: var(--button-radius);
+    width: fit-content;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.route-main {
+    min-height: 100%;
+    padding: 30px 50px 10px;
+}
+
+.station {
+    position: relative;
+}
+
+.station:first-child > .station-point {
+    box-shadow: 4px 4px 25px rgb(54, 160, 199, 0.8);
+    width: calc(var(--point-size)*1.1);
+    height: calc(var(--point-size)*1.1);
+    background-color: #36a0c7;   
+    border: 3px solid #36a0c7;
+}
+
+.station-point {
+    width: var(--point-size);
+    height: var(--point-size);
+    background-color: #fff;
+    border: 3px solid #3b4041;
+    border-radius: var(--button-radius);
+    z-index: 1000;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+}
+
+.route-main:active .station .station-point {
+    background-color: #beeafa;
+    border: 3px solid #36a0c7;
+}
+
+.route-main:active .station .station-point:active {
+    background-color: #36a0c7;
+}
+
+.route-main:active .station::before {
+    background-color: #36a0c7;
+}
+
+.station-point:hover {
+    box-shadow: 4px 4px 25px rgb(54, 160, 199, 0.8);
+    width: calc(var(--point-size)*1.1);
+    height: calc(var(--point-size)*1.1);
+}
+
+.station-point:hover .station-route {
+    visibility: visible;
+}
+
+.station::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: calc(var(--point-size)*0.5);
+    left: calc(var(--point-size)*0.5 + 50%);
+    transform: translateY(50%);
+    background-color: #6c6666;
+    z-index: -1000;
+}
+
+.station:has(.station-point:active) ~ .station .station-point {
+    background-color: #fff;
+    border: 3px solid #3b4041;
+}
+
+.station:has(.station-point:active)::before ,
+.station:has(.station-point:active) ~ .station::before {
+    background-color: #6c6666;
+}
+
+.station[end]::before {
+    display: none;
+}
+
+.station-name {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-100%) rotate(-45deg);
+}
+
+.station-route {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #00c;
+    line-height: 1;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-align: center;
+    color: #fff;
+    transform: translate(calc(-50% + var(--point-size)*0.5 - 5px), calc(50% + var(--point-size) + 5px));
+}
+
+.station-route::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateY(-100%);
+    margin-left: -5px;
+    border: 10px;
+    border-style: solid;
+    border-color:transparent transparent #00c   transparent;
+  }
+
+.station-route-mark {
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin: 0 2px;
+}
